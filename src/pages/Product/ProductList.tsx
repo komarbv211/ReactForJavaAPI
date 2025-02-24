@@ -1,29 +1,28 @@
-import { useDeleteCategoryMutation, useGetCategoriesQuery } from "../../services/apiCategory.ts";
+
 import { Link } from "react-router-dom";
 import { Button, Dropdown, MenuProps, notification, Spin } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
-import defaultProfile from "../../assets/images/defolt.webp";
+import defaultProductImage from "../../assets/images/defolt.webp";
 import { APP_ENV } from "../../env/index.ts";
+import { useDeleteProductMutation, useGetProductsQuery } from "../../services/apiProduct.ts";
 
-const CategoryListPage = () => {
-    const { data: list, isLoading, error } = useGetCategoriesQuery();
-    const [deleteCategory] = useDeleteCategoryMutation();
-   
+const ProductList = () => {
+    const { data: list, isLoading, error } = useGetProductsQuery();
+    const [deleteProduct] = useDeleteProductMutation();
 
     const handleDelete = async (id: number) => {
         try {
-            await deleteCategory(id).unwrap();
+            await deleteProduct(id).unwrap();
             notification.success({
-                message: "Категорія видалена",
-                description: "Категорія успішно видалена!",
+                message: "Продукт видалено",
+                description: "Продукт успішно видалено!",
             });
         } catch {
             notification.error({
-                message: "Помилка видалення категорії",
+                message: "Помилка видалення продукту",
             });
         }
     };
-        
 
     const renderActions = (id: number) => {
         const items: MenuProps["items"] = [
@@ -49,16 +48,16 @@ const CategoryListPage = () => {
 
     return (
         <>
-            <h1 className="text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 my-6">
-                Список категорій
+            <h1 className="text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500 my-6">
+                Список продуктів
             </h1>
 
             <div className="flex justify-end mb-4">
                 <Link
                     to={"create"}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                 >
-                    Додати
+                    Додати продукт
                 </Link>
             </div>
 
@@ -75,29 +74,28 @@ const CategoryListPage = () => {
                             <tr>
                                 <th scope="col" className="px-6 py-3">Назва</th>
                                 <th scope="col" className="px-6 py-3">Зображення</th>
-                                <th scope="col" className="px-6 py-3">Опис</th>
+                                <th scope="col" className="px-6 py-3">Ціна</th>
                                 <th scope="col" className="px-6 py-3 text-center">Дії</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {list?.map((category) => (
+                            {list?.map((product) => (
                                 <tr
-                                    key={category.id}
+                                    key={product.id}
                                     className="odd:bg-white even:bg-gray-50 border-b dark:border-gray-700"
                                 >
                                     <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                        {category.name}
+                                        {product.name}
                                     </td>
                                     <td className="px-6 py-4">
                                         <img 
-                                            src={category.image ? `${APP_ENV.REMOTE_LARGE_IMAGES_URL}${category.image}` : defaultProfile} 
-                                            alt={category.name} className="w-16 h-16 object-cover"
+                                            src={product.images[0].name ? `${APP_ENV.REMOTE_LARGE_IMAGES_URL}${product.images[0].name }` : defaultProductImage} 
+                                            alt={product.name} className="w-16 h-16 object-cover"
                                         />
                                     </td>
-                                    <td className="px-6 py-4">{category.description}</td>
-                                    <td className="px-6 py-4 text-center">{renderActions(category.id)}</td>
+                                    <td className="px-6 py-4">{product.price} грн</td>
+                                    <td className="px-6 py-4 text-center">{renderActions(product.id)}</td>
                                 </tr>
-                                
                             ))}
                         </tbody>
                     </table>
@@ -107,4 +105,4 @@ const CategoryListPage = () => {
     );
 };
 
-export default CategoryListPage;
+export default ProductList;

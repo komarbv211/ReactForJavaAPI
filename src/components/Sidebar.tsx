@@ -16,6 +16,11 @@ const Sidebar: React.FC = () => {
                     </a>
                 </li>
                 <li>
+                    <a href="/products" className="block p-2 hover:bg-gray-700 rounded">
+                        Продукти
+                    </a>
+                </li>
+                <li>
                     <a href="/about" className="block p-2 hover:bg-gray-700 rounded">
                         About
                     </a>
