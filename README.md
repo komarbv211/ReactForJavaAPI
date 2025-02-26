@@ -4,6 +4,7 @@
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 npm install react-router-dom
+npm i object-to-formdata
 npm i antd
 npm run dev
 

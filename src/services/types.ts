@@ -8,7 +8,7 @@ export interface ICategoryItem {
 // CategoryModel.ts
 export interface ICategoryPostRequest {
     name: string;         
-    image: File ;         
+    image: File|null;         
     description: string;
 }
 
