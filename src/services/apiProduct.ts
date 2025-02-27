@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {APP_ENV} from "../env/index.ts";
 import { IProductItem, IProductPostRequest, IProductPutRequest } from './types.ts';
+import {serialize} from "object-to-formdata";
 
 
-// Define the API slice
 export const apiProduct = createApi({
     reducerPath: 'product',
     baseQuery: fetchBaseQuery({ baseUrl: `${APP_ENV.REMOTE_BASE_URL}` }), 
@@ -25,12 +25,19 @@ export const apiProduct = createApi({
             }),
             invalidatesTags: ["Product"], 
         }),
-        updateProduct: builder.mutation<IProductPutRequest, FormData>({
-            query: ( formData) => ({
-                url: `products/${formData.get("id")}`,
-                method: 'PUT',
-                body: formData,
-            }),
+        updateProduct: builder.mutation<IProductItem, IProductPutRequest>({
+            query: ({ id, ...updateProduct }) => {
+                            try {
+                                const formData = serialize(updateProduct);
+                                return {
+                                    url: `categories/${id}`,
+                                    method: 'PUT', 
+                                    body: formData,
+                                };
+                            } catch {
+                                throw new Error("Error serializing the form data.");
+                            }
+                        },
             invalidatesTags: ["Product"],
         }),
         deleteProduct: builder.mutation<{ success: boolean }, number>({

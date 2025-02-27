@@ -85,7 +85,9 @@ const ProductList = () => {
                                     className="odd:bg-white even:bg-gray-50 border-b dark:border-gray-700"
                                 >
                                     <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                        {product.name}
+                                        <Link to={`product/${product.id}`} className="text-blue-600 hover:underline">
+                                            {product.name}
+                                        </Link>
                                     </td>
                                     <td className="px-6 py-4">
                                         <img 

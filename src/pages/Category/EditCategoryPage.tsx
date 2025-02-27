@@ -27,16 +27,19 @@ const EditCategoryPage = () => {
     }, [category, form]);
 
     const onFinish = async (values: ICategoryPutRequest) => {
-    try {
-        values.id = Number(id);
-        values.image = imageFile; 
-        const response = await updateCategory(values).unwrap();
-        console.log("Response:", response);
-        navigate("..");
-    } catch (err) {
-        console.error("Помилка оновлення категорії:", err);
-    }
-};
+        try {
+            values.id = Number(id);
+            values.image = imageFile; 
+            if (!values.image) {
+                delete values.image;
+            }
+            const response = await updateCategory(values).unwrap();
+            console.log("Response:", response);
+            navigate("..");
+        } catch (err) {
+            console.error("Помилка оновлення категорії:", err);
+        }
+    };
 
 
     const beforeUpload = (file: File) => {

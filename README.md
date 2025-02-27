@@ -1,31 +1,20 @@
 # React + TypeScript + Vite
 
-```
+```````````````````````````````````````````````````
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 npm install react-router-dom
 npm i object-to-formdata
-npm i antd
-npm run dev
-
-
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
 npm install @reduxjs/toolkit react-redux
 npm install --save-dev @types/react-redux
 npm install antd
 npm install antd@latest
-npm install --save react-infinite-scroll-component
-cd my-react
-package org.example.entites;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
-import lombok.Data;
+npm install @hello-pangea/dnd
 
-import java.time.LocalDateTime;
-import java.util.List;
+npm run dev
 
+````````````````````````````````````````````````````
 @Data
 @Entity
 @Table(name="tbl_products")

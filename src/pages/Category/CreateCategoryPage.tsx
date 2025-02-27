@@ -13,7 +13,6 @@ const CreateCategoryPage = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const [imageFile, setImageFile] = useState<File | null>(null);
-    // const [previewImage, setPreviewImage] = useState<string | null>(null);
 
     const onFinish = async (values: ICategoryPostRequest) => {
         try {
@@ -27,13 +26,13 @@ const CreateCategoryPage = () => {
     };
 
     const beforeUpload = (file: File) => {
-        // Перевірка формату файлу перед додаванням
+        
         const isImage = file.type.startsWith('image/');
         if (!isImage) {
             alert('Будь ласка, завантажте зображення');
         }
         setImageFile(file);
-        return false; // Призупиняє автоматичне завантаження
+        return false; 
     };
 
     return (
