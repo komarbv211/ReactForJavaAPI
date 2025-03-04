@@ -10,7 +10,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { DropResult } from "@hello-pangea/dnd";
 
 const CreateProductPage = () => {
-    const [createProduct] = useCreateProductMutation();
+    const [createProduct, {isLoading: isLoadingCreate}] = useCreateProductMutation();
     const { data: categories, isLoading } = useGetCategoriesQuery();
     const navigate = useNavigate();
 
@@ -42,11 +42,11 @@ const CreateProductPage = () => {
             order: index,
         }));
 
-        setFileList(newFileList);
-        setProduct({
-            ...product,
-            images: newFileList.map(file => file.originFileObj as File),
-        });
+        setFileList([...fileList, ...newFileList]);
+        // setProduct({
+        //     ...product,
+        //     images: newFileList.map(file => file.originFileObj as File),
+        // });
     };
 
     const onDragEnd = (result: DropResult) => {
@@ -68,19 +68,9 @@ const CreateProductPage = () => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append("name", product.name);
-        formData.append("price", product.price.toString());
-        formData.append("categoryId", product.categoryId);
-
-        if (product.images && product.images.length > 0) {
-            product.images.forEach((image) => {
-                formData.append("images", image);
-            });
-        }
-
         try {
-            await createProduct(formData).unwrap();
+            product.images=fileList.map(x=> x.originFileObj as File);
+            await createProduct(product).unwrap();
             notification.success({ message: "Продукт створено" });
             navigate("/products");
         } catch {
@@ -167,8 +157,8 @@ const CreateProductPage = () => {
                 </div>
             </Upload>
 
-            <Button type="primary" onClick={handleSubmit} className="mt-4 w-full">
-                Зберегти
+            <Button type="primary" disabled={isLoadingCreate} onClick={handleSubmit} className="mt-4 w-full">
+                {isLoadingCreate ? <span>Збереження ...</span> : <span>Зберегти</span>}
             </Button>
         </div>
     );

@@ -17,20 +17,20 @@ export const apiProduct = createApi({
             query: (id) => `products/${id}`,
             providesTags: (_, __, id) => [{ type: 'Product', id }],
         }),
-        createProduct:builder.mutation<IProductPostRequest, FormData>({
-            query: (formData) => ({
+        createProduct:builder.mutation<IProductItem, IProductPostRequest>({
+            query: (model) => ({
                 url: 'products',
                 method: 'POST',
-                body: formData,
+                body: serialize(model),
             }),
-            invalidatesTags: ["Product"], 
+            invalidatesTags: ["Product"],
         }),
         updateProduct: builder.mutation<IProductItem, IProductPutRequest>({
             query: ({ id, ...updateProduct }) => {
                             try {
                                 const formData = serialize(updateProduct);
                                 return {
-                                    url: `categories/${id}`,
+                                    url: `products/${id}`,
                                     method: 'PUT', 
                                     body: formData,
                                 };
