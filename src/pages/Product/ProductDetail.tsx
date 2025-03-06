@@ -20,7 +20,14 @@ const ProductDetail = () => {
     return (
         <div className="container mx-auto p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ImagesViewer advertImages={product.images} className="h-96" />
+            <ImagesViewer 
+                advertImages={product.images.map(image => ({
+                    ...image,
+                    advertId: image.productId ?? 0  
+                }))} 
+                className="h-96" 
+            />
+
                 <div>
                     <Title level={2}>{product.name}</Title>
                     <Paragraph className="text-lg font-bold">Ціна: {product.price} грн</Paragraph>
