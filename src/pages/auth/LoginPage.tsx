@@ -5,14 +5,14 @@ import {GoogleOAuthProvider} from "@react-oauth/google";
 import {APP_ENV} from "../../env";
 import GoogleLoginButton from "./GoogleLoginButton.tsx";
 import { GoogleOutlined } from '@ant-design/icons';
-import { useLoginGoogleMutation, useLoginUserMutation } from "../../services/authApi.ts";
+import { useGoogleLoginUserMutation, useLoginUserMutation } from "../../services/authApi.ts";
 import {useNavigate} from "react-router-dom";
 
 const {Item} = Form;
 
 const LoginPage: React.FC = () => {
     const [form] = Form.useForm<IUserLoginRequest>();
-    const [loginGoogle] = useLoginGoogleMutation(); 
+    const [loginGoogle] = useGoogleLoginUserMutation(); 
     const [loginUser] = useLoginUserMutation(); 
     const navigate = useNavigate();
     const [messageApi, contextHolder] = message.useMessage();
