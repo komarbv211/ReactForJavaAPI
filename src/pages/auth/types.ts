@@ -8,6 +8,9 @@ export interface IUserLoginRequest {
     username: string;        
     password: string;
 }
+export interface IAuthResponse {
+    token: string;
+}
 export interface LoginButtonProps{
     title:string
     onLogin:(token: string) => void
