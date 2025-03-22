@@ -42,3 +42,7 @@ export interface IProductPutRequest {
     categoryId: string;
     images?: File[];
 }
+export interface IPhotoUserPutRequest {
+    userId: number;
+    photo: File;
+}
