@@ -1,12 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {APP_ENV} from "../env";
-import {ICategoryItem, ICategoryPostRequest, ICategoryPutRequest} from "./types.ts";
-import {serialize} from "object-to-formdata";
-
+import { APP_ENV } from "../env";
+import { ICategoryItem, ICategoryPostRequest, ICategoryPutRequest } from './types';
+//import { RootState } from "../store";
+import { serialize } from 'object-to-formdata';
 
 export const apiCategory = createApi({
     reducerPath: 'category',
-    baseQuery: fetchBaseQuery({ baseUrl: `${APP_ENV.REMOTE_BASE_URL}` }), 
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: `${APP_ENV.REMOTE_BASE_URL}`,
+        // prepareHeaders: (headers, { getState }) => {
+        //     const token = (getState() as RootState).user.token;
+           
+        //     if (token) {
+        //         headers.set('Authorization', `${token}`);
+        //         console.log("token:", token)
+        //     }
+        //     return headers;
+        // }
+    }), 
     tagTypes: ["Category"], 
     endpoints: (builder) => ({
         getCategories: builder.query<ICategoryItem[], void>({
